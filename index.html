@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sona Chandi Jewellers, Haldwani — trusted gold, diamond and silver jewellery. Explore our collection of BIS hallmarked bridal sets, rings and more.">
+    <title>Sona Chandi Jewellers — Fine Gold & Diamond Jewellery, Haldwani</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,900&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS — powers the lower showcase sections -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary":                  "#d4af37",
+                        "primary-container":        "#d4af37",
+                        "on-primary":               "#000000",
+                        "secondary":                "#a0a0a0",
+                        "background":               "#0a0a0a",
+                        "surface":                  "#0a0a0a",
+                        "surface-container":        "#151515",
+                        "surface-container-lowest": "#000000",
+                        "surface-container-high":   "#1a1a1a",
+                        "on-surface":               "#fbf9f5",
+                        "outline-variant":          "#d0c5af",
+                        "on-surface-variant":       "#d0c5af"
+                    },
+                    fontFamily: {
+                        "display-lg":  ["Playfair Display", "Georgia", "serif"],
+                        "body-lg":     ["Inter", "Helvetica Neue", "sans-serif"],
+                        "body-md":     ["Inter", "Helvetica Neue", "sans-serif"],
+                        "label-caps":  ["Inter", "Helvetica Neue", "sans-serif"],
+                        "button":      ["Inter", "Helvetica Neue", "sans-serif"]
+                    },
+                    spacing: {
+                        "margin-desktop":  "80px",
+                        "margin-mobile":   "24px",
+                        "section-gap":     "160px",
+                        "container-max":   "100%"
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Custom CSS — preloader, nav, hero, animation section -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Utilities for Tailwind-powered lower sections -->
+    <style>
+        /* Scroll-reveal (LUMIÈRE system) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.2,1,0.3,1),
+                        transform 1.2s cubic-bezier(0.2,1,0.3,1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Gold outline text for "Selected" heading */
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(212,175,55,0.35);
+            color: transparent;
+        }
+
+        /* Parallax background helper */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Hide carousel scrollbar while still allowing drag */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- ═══════════════════════════════════════════
+         PRELOADER
+    ═══════════════════════════════════════════ -->
+    <div id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">SC</div>
+            <div class="preloader-bar-track">
+                <div class="preloader-bar" id="preloaderBar"></div>
+            </div>
+            <div class="preloader-text" id="preloaderText">Loading experience... 0%</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════ -->
+    <nav id="navbar">
+        <div class="nav-logo">Sona Chandi Jewellers</div>
+        <div class="nav-links" id="navLinks">
+            <a href="#hero"             class="nav-link">Home</a>
+            <a href="#animation-section" class="nav-link">Showcase</a>
+            <a href="collections.html"  class="nav-link">Collections</a>
+            <a href="#collections"      class="nav-link">Gallery</a>
+            <a href="#about"            class="nav-link">About</a>
+            <a href="#footer"           class="nav-link">Contact</a>
+        </div>
+        <div class="nav-cta">
+            <button class="btn-nav" id="navCta">Visit Us</button>
+        </div>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════ -->
+    <section id="hero">
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="hero-content">
+            <p class="hero-tagline">— Haldwani, Uttarakhand —</p>
+            <h1 class="hero-title">
+                <span class="title-line" data-animate="1">Jewellery You Can</span>
+                <span class="title-line title-accent" data-animate="2">Trust for Generations</span>
+            </h1>
+            <p class="hero-subtitle">Scroll down to discover BIS hallmarked gold, diamond and silver jewellery, handcrafted with precision and trust — from Sona Chandi Jewellers, Haldwani.</p>
+            <div class="scroll-indicator" id="scrollIndicator">
+                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+                <span class="scroll-text">Scroll to Discover</span>
+            </div>
+        </div>
+        <div class="hero-gradient-overlay"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SCROLL-DRIVEN FRAME ANIMATION
+    ═══════════════════════════════════════════ -->
+    <section id="animation-section">
+        <div class="animation-sticky">
+            <canvas id="frameCanvas"></canvas>
+
+            <div class="anim-overlay-content">
+                <div class="anim-text anim-text-1" id="animText1">
+                    <span class="anim-label">The Collection</span>
+                    <h2>Bridal Gold Sets</h2>
+                    <p>Intricately crafted 22k gold, designed for your most cherished moments</p>
+                </div>
+                <div class="anim-text anim-text-2" id="animText2">
+                    <span class="anim-label">Craftsmanship</span>
+                    <h2>Skilled Hands, Honest Gold</h2>
+                    <p>Every piece hand-finished by our master karigars in Haldwani</p>
+                </div>
+                <div class="anim-text anim-text-3" id="animText3">
+                    <span class="anim-label">Our Promise</span>
+                    <h2>BIS Hallmarked, Always</h2>
+                    <p>Purity you can verify, trust that has been earned over generations</p>
+                </div>
+            </div>
+
+            <div class="scroll-progress-track">
+                <div class="scroll-progress-fill" id="scrollProgressFill"></div>
+                <div class="scroll-progress-label" id="scrollProgressLabel">0%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ICONIC SHAPES — HORIZONTAL CAROUSEL
+    ═══════════════════════════════════════════ -->
+    <section class="py-section-gap bg-surface-container-lowest overflow-hidden" id="collections">
+
+        <div class="px-margin-mobile md:px-margin-desktop mb-24
+                    flex flex-col md:flex-row justify-between items-baseline gap-4 reveal">
+            <h2 class="font-display-lg text-6xl md:text-9xl leading-none text-white">
+                Our <span class="italic font-light">Signature</span> Collections
+            </h2>
+            <p class="max-w-md font-body-lg text-secondary">
+                From everyday gold to bridal masterpieces — every collection is crafted at our Haldwani workshop with honest purity and lasting design.
+            </p>
+        </div>
+
+        <div class="flex overflow-x-auto gap-8 pb-20 px-margin-mobile md:px-margin-desktop no-scrollbar">
+
+            <!-- Card 1 — Necklaces -->
+            <div class="flex-none w-[80vw] md:w-[45vw] group relative overflow-hidden" style="aspect-ratio:4/5">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                     style="background-image:url('images2/3.jpg')">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute bottom-12 left-12">
+                    <span class="text-primary font-label-caps text-xs tracking-widest block mb-4">NECKLACES</span>
+                    <h3 class="font-display-lg text-5xl md:text-7xl mb-6 text-white">Rani Haar Collection</h3>
+                    <a href="collections.html" class="scroll-cta inline-block bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-3
+                                   text-[10px] uppercase tracking-[0.2em]
+                                   hover:bg-primary hover:text-black transition-all">
+                        View Collection
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2 — Rings -->
+            <div class="flex-none w-[80vw] md:w-[45vw] group relative overflow-hidden" style="aspect-ratio:4/5">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                     style="background-image:url('images2/16-pbeocgjh7oxncot0oqziy28r5awvtn5vhs7rls52q4.jpg')">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute bottom-12 left-12">
+                    <span class="text-primary font-label-caps text-xs tracking-widest block mb-4">RINGS</span>
+                    <h3 class="font-display-lg text-5xl md:text-7xl mb-6 text-white">Solitaire Collection</h3>
+                    <a href="collections.html" class="scroll-cta inline-block bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-3
+                                   text-[10px] uppercase tracking-[0.2em]
+                                   hover:bg-primary hover:text-black transition-all">
+                        View Collection
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3 — Bangles & Kadas -->
+            <div class="flex-none w-[80vw] md:w-[45vw] group relative overflow-hidden" style="aspect-ratio:4/5">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                     style="background-image:url('images2/26.jpg')">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute bottom-12 left-12">
+                    <span class="text-primary font-label-caps text-xs tracking-widest block mb-4">BANGLES &amp; KADAS</span>
+                    <h3 class="font-display-lg text-5xl md:text-7xl mb-6 text-white">Kada Collection</h3>
+                    <a href="collections.html" class="scroll-cta inline-block bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-3
+                                   text-[10px] uppercase tracking-[0.2em]
+                                   hover:bg-primary hover:text-black transition-all">
+                        View Collection
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         CINEMATIC FEATURE — HANDCRAFTED
+    ═══════════════════════════════════════════ -->
+    <section class="relative min-h-[80vh] flex items-center bg-black overflow-hidden py-24">
+
+        <!-- Parallax background image (right side) -->
+        <div class="absolute top-0 right-0 w-2/3 h-full opacity-40 parallax-bg"
+             style="background-image:url('images2/6-pbemsthenqrm3nmkl75julph975p6n9vie01x4n11o.jpg')">
+        </div>
+
+        <div class="px-margin-mobile md:px-margin-desktop relative z-10 w-full max-w-4xl">
+            <span class="text-primary font-label-caps tracking-widest block mb-12 reveal">
+                WHY SONA CHANDI
+            </span>
+            <h2 class="font-display-lg text-6xl md:text-8xl mb-12 italic text-white reveal" style="transition-delay:100ms">
+                Handcrafted to <br/>Perfection
+            </h2>
+            <p class="font-body-lg text-xl text-white/70 leading-relaxed mb-16 reveal" style="transition-delay:200ms">
+                Every piece at our Haldwani workshop is shaped by skilled karigars who blend traditional technique with modern design — so what you wear is as trustworthy as it is beautiful.
+            </p>
+            <div class="grid grid-cols-2 gap-12 reveal" style="transition-delay:300ms">
+                <div>
+                    <h4 class="text-primary font-display-lg text-4xl mb-2 italic">916</h4>
+                    <p class="font-label-caps text-[10px] text-white opacity-60">BIS Hallmark Gold</p>
+                </div>
+                <div>
+                    <h4 class="text-primary font-display-lg text-4xl mb-2 italic">100%</h4>
+                    <p class="font-label-caps text-[10px] text-white opacity-60">Certified Purity</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ABOUT US SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="about-section" id="about">
+        <div class="about-inner">
+            <div class="about-image-wrap reveal">
+                <img src="images2/WhatsApp-Image-2021-04-30-at-16.51.21-p6h5kfauy1519xgnf2qhvfgizcyyf20ieqmlteb4ek.jpeg"
+                     alt="Sona Chandi Jewellers Store">
+            </div>
+            <div class="about-content">
+                <span class="about-label reveal">OUR LEGACY</span>
+                <h2 class="about-title reveal" style="transition-delay:100ms">
+                    A Heritage of Trust,<br>Since 1988
+                </h2>
+                <p class="about-desc reveal" style="transition-delay:200ms">
+                    For over 37 years, Sona Chandi Jewellers has been a jeweller who has cherished the importance of trust, innovation and style. The company was the brainchild of its founder Anil Kumar Agarwal in the year 1988.
+                </p>
+                <p class="about-desc reveal" style="transition-delay:250ms">
+                    He started with a small jewellery store and opened their flagship store in 2019 with the notion of providing its vast clientele a world-class experience accompanied by a mesmerising collection of jewellery crafted at our Haldwani workshop.
+                </p>
+                <div class="about-stats reveal" style="transition-delay:350ms">
+                    <div>
+                        <div class="about-stat-value">37+</div>
+                        <div class="about-stat-label">Years of Trust</div>
+                    </div>
+                    <div>
+                        <div class="about-stat-value">1988</div>
+                        <div class="about-stat-label">Established</div>
+                    </div>
+                    <div>
+                        <div class="about-stat-value">10K+</div>
+                        <div class="about-stat-label">Happy Families</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SELECTED MASTERPIECES — PRODUCT GRID
+    ═══════════════════════════════════════════ -->
+    <section class="py-section-gap px-margin-mobile md:px-margin-desktop" id="featured"
+             style="background:#0a0a0a">
+
+        <!-- Overlapping display title -->
+        <div class="text-center mb-32 reveal">
+            <h2 class="font-display-lg text-7xl md:text-[140px] text-stroke uppercase leading-none opacity-50">
+                Selected
+            </h2>
+            <h3 class="font-display-lg text-4xl md:text-7xl italic text-white relative z-10 -mt-10 md:-mt-24">
+                Masterpieces
+            </h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-32 gap-x-12">
+
+            <!-- Piece 1 — Kundan Solitaire Ring -->
+            <div class="reveal">
+                <div class="group relative mb-8 overflow-hidden bg-surface-container" style="aspect-ratio:1/1">
+                    <img class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-125"
+                         src="images2/17-pbeoxz2hn6dx3djz21s40mskmsvc08kp49rv1s8ob0.jpg"
+                         alt="Kundan Solitaire Ring">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity
+                                flex items-center justify-center">
+                        <button class="enquire-btn bg-primary text-black font-button text-[10px] px-10 py-4 uppercase tracking-widest
+                                       translate-y-10 group-hover:translate-y-0 transition-transform duration-500"
+                                data-product="Kundan Solitaire Ring">
+                            Enquire Now
+                        </button>
+                    </div>
+                </div>
+                <div class="flex justify-between items-baseline">
+                    <div>
+                        <h4 class="font-display-lg text-2xl italic mb-1 text-white">Kundan Solitaire Ring</h4>
+                        <p class="font-label-caps text-[10px] text-white opacity-40">22k Gold • BIS Hallmark</p>
+                    </div>
+                    <span class="text-primary font-body-md">₹85,000</span>
+                </div>
+            </div>
+
+            <!-- Piece 2 — Polki Bridal Necklace (staggered offset) -->
+            <div class="reveal md:mt-24 lg:mt-48">
+                <div class="group relative mb-8 overflow-hidden bg-surface-container" style="aspect-ratio:1/1">
+                    <img class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-125"
+                         src="images2/19-pbelzohismvm6tyaqlpwjyf2b6s2kflfi5y6cbudxo.jpg"
+                         alt="Polki Bridal Necklace">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity
+                                flex items-center justify-center">
+                        <button class="enquire-btn bg-primary text-black font-button text-[10px] px-10 py-4 uppercase tracking-widest
+                                       translate-y-10 group-hover:translate-y-0 transition-transform duration-500"
+                                data-product="Polki Bridal Necklace">
+                            Enquire Now
+                        </button>
+                    </div>
+                </div>
+                <div class="flex justify-between items-baseline">
+                    <div>
+                        <h4 class="font-display-lg text-2xl italic mb-1 text-white">Polki Bridal Necklace</h4>
+                        <p class="font-label-caps text-[10px] text-white opacity-40">22k Gold • Kundan Polki</p>
+                    </div>
+                    <span class="text-primary font-body-md">Price on Request</span>
+                </div>
+            </div>
+
+            <!-- Piece 3 — Temple Jhumka Earrings -->
+            <div class="reveal">
+                <div class="group relative mb-8 overflow-hidden bg-surface-container" style="aspect-ratio:1/1">
+                    <img class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-125"
+                         src="images2/15-pbeo9pufa36jhmsdp2bp695crufcdfa247ps7q7evg.jpg"
+                         alt="Temple Jhumka Earrings">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity
+                                flex items-center justify-center">
+                        <button class="enquire-btn bg-primary text-black font-button text-[10px] px-10 py-4 uppercase tracking-widest
+                                       translate-y-10 group-hover:translate-y-0 transition-transform duration-500"
+                                data-product="Temple Jhumka Earrings">
+                            Enquire Now
+                        </button>
+                    </div>
+                </div>
+                <div class="flex justify-between items-baseline">
+                    <div>
+                        <h4 class="font-display-lg text-2xl italic mb-1 text-white">Temple Jhumka Earrings</h4>
+                        <p class="font-label-caps text-[10px] text-white opacity-40">22k Gold • Temple Design</p>
+                    </div>
+                    <span class="text-primary font-body-md">₹45,000</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer class="bg-black text-white pt-32 pb-12" id="footer">
+        <div class="px-margin-mobile md:px-margin-desktop">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
+
+                <!-- Brand column -->
+                <div class="lg:col-span-2">
+                    <a href="#hero" class="font-display-lg text-6xl tracking-tighter text-primary italic font-black mb-12 block">
+                        Sona Chandi Jewellers
+                    </a>
+                    <p class="text-white/40 max-w-sm mb-12 text-sm leading-relaxed">
+                        Trusted gold, diamond and silver jewellery in the heart of Haldwani — BIS hallmarked purity, honest pricing, generations of craftsmanship.
+                    </p>
+                    <div class="flex gap-6">
+                        <a href="tel:+917617451234" aria-label="Call us" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <span class="material-symbols-outlined text-sm">call</span>
+                        </a>
+                        <a href="https://web.whatsapp.com/send?phone=917617451234&text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20jewellery%20collection" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <span class="material-symbols-outlined text-sm">chat</span>
+                        </a>
+                        <a href="https://www.instagram.com/sonachandi.jewellers/" target="_blank" rel="noopener" aria-label="Instagram" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <span class="material-symbols-outlined text-sm">photo_camera</span>
+                        </a>
+                        <a href="https://facebook.com/Sona-Chandi-Jewellers-234830434285218/" target="_blank" rel="noopener" aria-label="Facebook" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </a>
+                        <a href="https://maps.google.com/?q=Sona+Chandi+Jewellers+Haldwani" target="_blank" rel="noopener" aria-label="Find us on the map" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <span class="material-symbols-outlined text-sm">location_on</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <div>
+                    <h5 class="font-label-caps text-primary tracking-widest mb-10 text-[10px]">ABOUT US</h5>
+                    <ul class="space-y-6 text-sm text-white/60">
+                        <li><a href="#" class="info-link hover:text-white transition-colors" data-info="history">Our History</a></li>
+                        <li><a href="#" class="info-link hover:text-white transition-colors" data-info="craftsmanship">Craftsmanship</a></li>
+                        <li><a href="#" class="info-link hover:text-white transition-colors" data-info="hallmark">Hallmark &amp; Purity</a></li>
+                        <li><a href="https://web.whatsapp.com/send?phone=917617451234&text=Hi%2C%20I%27m%20interested%20in%20career%20opportunities%20at%20Sona%20Chandi%20Jewellers" target="_blank" rel="noopener" class="hover:text-white transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Client Services -->
+                <div>
+                    <h5 class="font-label-caps text-primary tracking-widest mb-10 text-[10px]">CLIENT SERVICES</h5>
+                    <ul class="space-y-6 text-sm text-white/60">
+                        <li><a href="https://web.whatsapp.com/send?phone=917617451234&text=Hi%2C%20I%27d%20like%20to%20discuss%20a%20custom%2Fbespoke%20jewellery%20order" target="_blank" rel="noopener" class="hover:text-white transition-colors">Bespoke Inquiries</a></li>
+                        <li><a href="https://web.whatsapp.com/send?phone=917617451234&text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20the%20store" target="_blank" rel="noopener" class="hover:text-white transition-colors">Book an Appointment</a></li>
+                        <li><a href="#" class="info-link hover:text-white transition-colors" data-info="shipping">Shipping &amp; Returns</a></li>
+                        <li><a href="#" class="info-link hover:text-white transition-colors" data-info="care">Care Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-white/5 pt-12
+                        flex flex-col md:flex-row justify-between items-center gap-8
+                        text-[10px] font-label-caps tracking-widest text-white/30">
+                <p>&copy; 2026 SONA CHANDI JEWELLERS, HALDWANI. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-10">
+                    <a href="#" class="info-link hover:text-white transition-colors" data-info="privacy">PRIVACY POLICY</a>
+                    <a href="#" class="info-link hover:text-white transition-colors" data-info="terms">TERMS OF USE</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         INFO MODAL (About / Client Service links)
+    ═══════════════════════════════════════════ -->
+    <div id="infoModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 backdrop-blur-sm px-6" aria-hidden="true">
+        <div class="bg-surface-container-high border border-white/10 max-w-lg w-full p-10 relative">
+            <button id="infoModalClose" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors" aria-label="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 id="infoModalTitle" class="font-display-lg text-3xl italic text-primary mb-6"></h3>
+            <div id="infoModalBody" class="text-white/70 text-sm leading-relaxed space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         FLOATING WHATSAPP BUTTON
+    ═══════════════════════════════════════════ -->
+    <a href="https://web.whatsapp.com/send?phone=917617451234&text=" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- ═══════════════════════════════════════════
+         BACK TO TOP BUTTON
+    ═══════════════════════════════════════════ -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <span class="material-symbols-outlined">keyboard_arrow_up</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore our complete collection of BIS hallmarked gold, diamond, and silver jewellery at Sona Chandi Jewellers, Haldwani.">
+    <title>Collections — Sona Chandi Jewellers, Haldwani</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,900&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== Collections Page Specific ===== */
+        .coll-hero {
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a150d 50%, #0a0a0a 100%);
+        }
+
+        .coll-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to top, #0a0a0a, transparent);
+            z-index: 2;
+        }
+
+        .coll-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            filter: blur(2px);
+        }
+
+        .coll-hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .coll-hero-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold-400);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s forwards;
+        }
+
+        .coll-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--white-90);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.5s forwards;
+        }
+
+        .coll-hero-subtitle {
+            font-family: var(--font-accent);
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--white-50);
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.7s forwards;
+        }
+
+        /* Filter Tabs */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 40px 24px 60px;
+            flex-wrap: wrap;
+            background: var(--dark-900);
+        }
+
+        .filter-btn {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--white-50);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.35s var(--ease-out-expo);
+            border-radius: 100px;
+        }
+
+        .filter-btn:hover {
+            color: var(--white);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--gold-400), var(--gold-300));
+            color: var(--dark-900);
+            border-color: var(--gold-400);
+            font-weight: 600;
+        }
+
+        /* Product Grid */
+        .coll-grid-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 120px;
+            background: var(--dark-900);
+        }
+
+        .coll-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .coll-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--dark-700);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+
+        .coll-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .coll-card.hidden-card {
+            display: none;
+        }
+
+        .coll-card-image {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            transition: transform 1.2s var(--ease-out-expo);
+        }
+
+        .coll-card:hover .coll-card-image {
+            transform: scale(1.08);
+        }
+
+        .coll-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 40%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px;
+        }
+
+        .coll-card:hover .coll-card-overlay {
+            opacity: 1;
+        }
+
+        .coll-card-category {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-400);
+            margin-bottom: 8px;
+        }
+
+        .coll-card-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--white);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .coll-card-btn {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--dark-900);
+            background: var(--gold-400);
+            border: none;
+            padding: 12px 28px;
+            cursor: pointer;
+            align-self: flex-start;
+            transform: translateY(20px);
+            transition: transform 0.5s var(--ease-out-expo), background 0.3s ease;
+        }
+
+        .coll-card:hover .coll-card-btn {
+            transform: translateY(0);
+        }
+
+        .coll-card-btn:hover {
+            background: var(--gold-300);
+        }
+
+        /* Bottom info for always-visible details */
+        .coll-card-info {
+            padding: 16px 20px;
+            background: var(--dark-700);
+        }
+
+        .coll-card-info-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--white-90);
+            margin-bottom: 4px;
+        }
+
+        .coll-card-info-meta {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--white-30);
+        }
+
+        /* Decorative divider */
+        .coll-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold-400), transparent);
+            margin: 0 auto 40px;
+        }
+
+        /* Collection count */
+        .coll-count {
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white-30);
+            padding-bottom: 40px;
+            background: var(--dark-900);
+        }
+
+        .coll-count span {
+            color: var(--gold-400);
+            font-weight: 600;
+        }
+
+        /* Footer on collections page */
+        .coll-footer {
+            background: #000;
+            color: var(--white);
+            padding: 80px 0 40px;
+        }
+
+        .coll-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .coll-footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .coll-footer-brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-style: italic;
+            font-weight: 900;
+            color: var(--gold-400);
+            text-decoration: none;
+        }
+
+        .coll-footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .coll-footer-links a {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--white-50);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            transition: color 0.3s ease;
+        }
+
+        .coll-footer-links a:hover {
+            color: var(--gold-400);
+        }
+
+        .coll-footer-bottom {
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+        }
+
+        @media (max-width: 768px) {
+            .coll-hero {
+                height: 40vh;
+                min-height: 300px;
+            }
+
+            .coll-grid-container {
+                padding: 0 16px 80px;
+            }
+
+            .coll-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 16px;
+            }
+
+            .filter-bar {
+                padding: 24px 16px 40px;
+                gap: 6px;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.6rem;
+            }
+
+            .coll-footer-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .coll-footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body style="background: var(--dark-900); color: var(--white); font-family: var(--font-body); overflow-x: hidden;">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════ -->
+    <nav id="navbar" class="scrolled">
+        <div class="nav-logo"><a href="index.html" style="color: inherit; text-decoration: none;">Sona Chandi Jewellers</a></div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html"             class="nav-link">Home</a>
+            <a href="index.html#animation-section" class="nav-link">Showcase</a>
+            <a href="collections.html"       class="nav-link" style="color: var(--gold-300);">Collections</a>
+            <a href="index.html#collections" class="nav-link">Gallery</a>
+            <a href="index.html#about"       class="nav-link">About</a>
+            <a href="index.html#footer"      class="nav-link">Contact</a>
+        </div>
+        <div class="nav-cta">
+            <a href="https://web.whatsapp.com/send?phone=917617451234&text=" target="_blank" rel="noopener" class="btn-nav" style="text-decoration:none;">Chat with Us</a>
+        </div>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         HERO BANNER
+    ═══════════════════════════════════════════ -->
+    <section class="coll-hero">
+        <div class="coll-hero-bg" style="background-image: url('images2/3.jpg')"></div>
+        <div class="coll-hero-content">
+            <p class="coll-hero-label">Sona Chandi Jewellers</p>
+            <h1 class="coll-hero-title">Our Collections</h1>
+            <p class="coll-hero-subtitle">Handcrafted gold, diamond & silver jewellery — BIS hallmarked, designed for every occasion</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FILTER TABS
+    ═══════════════════════════════════════════ -->
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="necklaces">Necklaces</button>
+        <button class="filter-btn" data-filter="rings">Rings</button>
+        <button class="filter-btn" data-filter="bangles">Bangles</button>
+        <button class="filter-btn" data-filter="earrings">Earrings</button>
+        <button class="filter-btn" data-filter="bridal">Bridal</button>
+    </div>
+
+    <div class="coll-divider"></div>
+    <div class="coll-count" id="collCount">Showing <span>24</span> pieces</div>
+
+    <!-- ═══════════════════════════════════════════
+         PRODUCT GRID
+    ═══════════════════════════════════════════ -->
+    <div class="coll-grid-container">
+        <div class="coll-grid" id="collGrid">
+
+            <!-- 1 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/1-2-p31qvimuhtlm8e8yv0w9nibbimsxkk5o1njz4cckqo.jpg" alt="Gold Rani Haar" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Gold Rani Haar</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Gold Rani Haar">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Gold Rani Haar</div>
+                    <div class="coll-card-info-meta">22k Gold • BIS Hallmark</div>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="coll-card" data-category="bridal">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/2-p2zbpr7y007mpgimy5iivr5b0r99b0vrq2gqbiqux8.jpg" alt="Bridal Kundan Set" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bridal</span>
+                        <h3 class="coll-card-name">Bridal Kundan Set</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Bridal Kundan Set">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Bridal Kundan Set</div>
+                    <div class="coll-card-info-meta">22k Gold • Kundan Work</div>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/3.jpg" alt="Temple Necklace" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Temple Necklace</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Temple Necklace">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Temple Necklace</div>
+                    <div class="coll-card-info-meta">22k Gold • Temple Design</div>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="coll-card" data-category="rings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/4-2-p31qvuckl60l7g9rq3wmpd9yhi0y19vbi5mw2jvfv0.jpg" alt="Diamond Solitaire Ring" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Rings</span>
+                        <h3 class="coll-card-name">Diamond Solitaire Ring</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Diamond Solitaire Ring">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Diamond Solitaire Ring</div>
+                    <div class="coll-card-info-meta">18k Gold • Diamond</div>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="coll-card" data-category="bangles">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/5-p31qvsgw7hy0k8ci133dkdr1aqa7lvnutwbx3zy87g.jpg" alt="Gold Kada" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bangles</span>
+                        <h3 class="coll-card-name">Gold Kada</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Gold Kada">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Gold Kada</div>
+                    <div class="coll-card-info-meta">22k Gold • Handcrafted</div>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="coll-card" data-category="bridal">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/6-pbemsthenqrm3nmkl75julph975p6n9vie01x4n11o.jpg" alt="Bridal Choker Set" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bridal</span>
+                        <h3 class="coll-card-name">Bridal Choker Set</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Bridal Choker Set">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Bridal Choker Set</div>
+                    <div class="coll-card-info-meta">22k Gold • Polki</div>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="coll-card" data-category="earrings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/7-pbelvg7o1h35y03hfrwcc0ue2rmlxgswx89ili45xo.jpg" alt="Jhumka Earrings" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Earrings</span>
+                        <h3 class="coll-card-name">Jhumka Earrings</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Jhumka Earrings">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Jhumka Earrings</div>
+                    <div class="coll-card-info-meta">22k Gold • Traditional</div>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/11-pbeoy0y60ughqlh8r2ld5mbhtkm2fms5sj2u0c5vyk.jpg" alt="Polki Necklace" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Polki Necklace</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Polki Necklace">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Polki Necklace</div>
+                    <div class="coll-card-info-meta">22k Gold • Polki Stones</div>
+                </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="coll-card" data-category="rings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/15-pbeo9pufa36jhmsdp2bp695crufcdfa247ps7q7evg.jpg" alt="Cocktail Ring" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Rings</span>
+                        <h3 class="coll-card-name">Cocktail Ring</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Cocktail Ring">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Cocktail Ring</div>
+                    <div class="coll-card-info-meta">18k Gold • Ruby</div>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="coll-card" data-category="rings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/16-pbeocgjh7oxncot0oqziy28r5awvtn5vhs7rls52q4.jpg" alt="Diamond Band Ring" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Rings</span>
+                        <h3 class="coll-card-name">Diamond Band Ring</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Diamond Band Ring">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Diamond Band Ring</div>
+                    <div class="coll-card-info-meta">18k Gold • Diamond</div>
+                </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/17-pbeoxz2hn6dx3djz21s40mskmsvc08kp49rv1s8ob0.jpg" alt="Kundan Choker" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Kundan Choker</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Kundan Choker">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Kundan Choker</div>
+                    <div class="coll-card-info-meta">22k Gold • Kundan</div>
+                </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="coll-card" data-category="bangles">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/18-pbelzw08bb5wrpndioyx3wir29r0a0fa77626jj8jw.jpg" alt="Antique Bangle Set" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bangles</span>
+                        <h3 class="coll-card-name">Antique Bangle Set</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Antique Bangle Set">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Antique Bangle Set</div>
+                    <div class="coll-card-info-meta">22k Gold • Antique</div>
+                </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="coll-card" data-category="bridal">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/19-pbelzohismvm6tyaqlpwjyf2b6s2kflfi5y6cbudxo.jpg" alt="Bridal Polki Necklace" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bridal</span>
+                        <h3 class="coll-card-name">Bridal Polki Necklace</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Bridal Polki Necklace">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Bridal Polki Necklace</div>
+                    <div class="coll-card-info-meta">22k Gold • Polki</div>
+                </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="coll-card" data-category="earrings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/20-pcf1q2yy8asc04s12qvi7jpbz5khul9bzctgu2ptsc.jpg" alt="Chandbali Earrings" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Earrings</span>
+                        <h3 class="coll-card-name">Chandbali Earrings</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Chandbali Earrings">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Chandbali Earrings</div>
+                    <div class="coll-card-info-meta">22k Gold • Meenakari</div>
+                </div>
+            </div>
+
+            <!-- 15 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/23-pcf1q4umlyuwncparrorcj895xb89zgsnm4fsmn1fw.jpg" alt="Layered Gold Necklace" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Layered Gold Necklace</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Layered Gold Necklace">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Layered Gold Necklace</div>
+                    <div class="coll-card-info-meta">22k Gold • Modern</div>
+                </div>
+            </div>
+
+            <!-- 16 -->
+            <div class="coll-card" data-category="bangles">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/24-pbemsqnw38nr4tqo1nxo54f3h1jljjyoi01lhar7kc.jpg" alt="Diamond Bangle" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bangles</span>
+                        <h3 class="coll-card-name">Diamond Bangle</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Diamond Bangle">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Diamond Bangle</div>
+                    <div class="coll-card-info-meta">18k Gold • Diamond</div>
+                </div>
+            </div>
+
+            <!-- 17 -->
+            <div class="coll-card" data-category="earrings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/25-pbemsrlqa2p1gfpaw6capm6k2feyr92eu4p2ykpte4.jpg" alt="Peacock Stud Earrings" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Earrings</span>
+                        <h3 class="coll-card-name">Peacock Stud Earrings</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Peacock Stud Earrings">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Peacock Stud Earrings</div>
+                    <div class="coll-card-info-meta">22k Gold • Swarovski</div>
+                </div>
+            </div>
+
+            <!-- 18 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/26.jpg" alt="Choker Necklace" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Choker Necklace</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Choker Necklace">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Choker Necklace</div>
+                    <div class="coll-card-info-meta">22k Gold • Heritage</div>
+                </div>
+            </div>
+
+            <!-- 19 -->
+            <div class="coll-card" data-category="bangles">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/30-pbemspq1wemgt7s175j1kmnmvno8buuy5ve400slqk.jpg" alt="Meenakari Bangle" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bangles</span>
+                        <h3 class="coll-card-name">Meenakari Bangle</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Meenakari Bangle">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Meenakari Bangle</div>
+                    <div class="coll-card-info-meta">22k Gold • Meenakari</div>
+                </div>
+            </div>
+
+            <!-- 20 -->
+            <div class="coll-card" data-category="bridal">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/33-pbeoy2tueij2dteig3emaluf0ccsv0zmgsdsyw33m4.jpg" alt="Bridal Gold Set" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bridal</span>
+                        <h3 class="coll-card-name">Bridal Gold Set</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Bridal Gold Set">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Bridal Gold Set</div>
+                    <div class="coll-card-info-meta">22k Gold • Complete Set</div>
+                </div>
+            </div>
+
+            <!-- 21 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/WhatsApp-Image-2021-04-30-at-16.51.21-p6h5kfauy1519xgnf2qhvfgizcyyf20ieqmlteb4ek.jpeg" alt="Antique Gold Haar" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Antique Gold Haar</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Antique Gold Haar">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Antique Gold Haar</div>
+                    <div class="coll-card-info-meta">22k Gold • Antique Finish</div>
+                </div>
+            </div>
+
+            <!-- 22 -->
+            <div class="coll-card" data-category="earrings">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/WhatsApp-Image-2021-04-30-at-16.52.06-p6h5kh6jbp7lx5dx43jr0ezg64poug7z2zxkry8c24.jpeg" alt="Temple Jhumka" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Earrings</span>
+                        <h3 class="coll-card-name">Temple Jhumka</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Temple Jhumka">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Temple Jhumka</div>
+                    <div class="coll-card-info-meta">22k Gold • Temple</div>
+                </div>
+            </div>
+
+            <!-- 23 -->
+            <div class="coll-card" data-category="bridal">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/WhatsApp-Image-2021-04-30-at-16.52.56-p6h5kdf6kd2gmpjdq1x8qfxlsl87znt1qhbmuudwr0.jpeg" alt="Bridal Nath Set" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Bridal</span>
+                        <h3 class="coll-card-name">Bridal Nath Set</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Bridal Nath Set">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Bridal Nath Set</div>
+                    <div class="coll-card-info-meta">22k Gold • Bridal</div>
+                </div>
+            </div>
+
+            <!-- 24 -->
+            <div class="coll-card" data-category="necklaces">
+                <div style="position:relative; overflow:hidden;">
+                    <img class="coll-card-image" src="images2/WhatsApp-Image-2021-04-30-at-16.57.16-p6h5kbji6ozvzhm4113zlgeolthhk9ll280nwagp3g.jpeg" alt="Rajasthani Haar" loading="lazy">
+                    <div class="coll-card-overlay">
+                        <span class="coll-card-category">Necklaces</span>
+                        <h3 class="coll-card-name">Rajasthani Haar</h3>
+                        <button class="coll-card-btn enquire-btn" data-product="Rajasthani Haar">Enquire Now</button>
+                    </div>
+                </div>
+                <div class="coll-card-info">
+                    <div class="coll-card-info-name">Rajasthani Haar</div>
+                    <div class="coll-card-info-meta">22k Gold • Traditional</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer class="coll-footer">
+        <div class="coll-footer-inner">
+            <div class="coll-footer-top">
+                <a href="index.html" class="coll-footer-brand">Sona Chandi Jewellers</a>
+                <div class="coll-footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#footer">Contact</a>
+                    <a href="https://web.whatsapp.com/send?phone=917617451234&text=" target="_blank" rel="noopener">WhatsApp</a>
+                    <a href="https://www.instagram.com/sonachandi.jewellers/" target="_blank" rel="noopener">Instagram</a>
+                </div>
+            </div>
+            <div class="coll-footer-bottom">
+                &copy; 2026 Sona Chandi Jewellers, Haldwani. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         FLOATING WHATSAPP BUTTON
+    ═══════════════════════════════════════════ -->
+    <a href="https://web.whatsapp.com/send?phone=917617451234&text=" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- ═══════════════════════════════════════════
+         BACK TO TOP
+    ═══════════════════════════════════════════ -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <span class="material-symbols-outlined">keyboard_arrow_up</span>
+    </button>
+
+    <!-- Main script (shared with index.html) -->
+    <script src="script.js"></script>
+
+    <!-- Collections-specific filter logic -->
+    <script>
+    (function() {
+        'use strict';
+
+        const grid = document.getElementById('collGrid');
+        const filterBar = document.getElementById('filterBar');
+        const countEl = document.getElementById('collCount');
+        if (!grid || !filterBar) return;
+
+        const cards = Array.from(grid.querySelectorAll('.coll-card'));
+
+        // Animate cards on load
+        function animateCards() {
+            const visible = cards.filter(c => !c.classList.contains('hidden-card'));
+            visible.forEach((card, i) => {
+                card.classList.remove('show');
+                setTimeout(() => card.classList.add('show'), i * 60);
+            });
+        }
+
+        // Filter
+        filterBar.addEventListener('click', e => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+
+            // Active state
+            filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+            let count = 0;
+
+            cards.forEach(card => {
+                const cat = card.dataset.category;
+                const show = (filter === 'all' || cat === filter);
+                card.classList.toggle('hidden-card', !show);
+                card.classList.remove('show');
+                if (show) count++;
+            });
+
+            // Update count
+            if (countEl) countEl.innerHTML = `Showing <span>${count}</span> pieces`;
+
+            // Re-animate visible cards
+            requestAnimationFrame(() => animateCards());
+        });
+
+        // Initial animation
+        setTimeout(animateCards, 200);
+    })();
+    </script>
+</body>
+</html>
